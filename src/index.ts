@@ -4,11 +4,11 @@ import type { HtmlTagDescriptor, PluginOption } from 'vite';
 import type { Options as HtmlMinifierTerserOptions } from 'html-minifier-terser';
 
 type Options = {
-  minify?: boolean | HtmlMinifierTerserOptions;
   inject?: {
     data?: Record<string, string>;
     tags?: HtmlTagDescriptor[];
   };
+  minify?: boolean | HtmlMinifierTerserOptions;
 };
 
 const defaultMinifyOptions: HtmlMinifierTerserOptions = {
@@ -22,7 +22,7 @@ const defaultMinifyOptions: HtmlMinifierTerserOptions = {
   minifyCSS: true,
 };
 
-export default function simpleHtmlPlugin({ minify: minifyOptions = false, inject }: Options = {}) {
+export default function simpleHtmlPlugin({ inject, minify: minifyOptions = false }: Options = {}) {
   return {
     name: 'vite:simple-html',
     async transformIndexHtml(html: string) {

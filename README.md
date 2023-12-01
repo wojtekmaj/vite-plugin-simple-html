@@ -21,7 +21,6 @@ import simpleHtmlPlugin from 'vite-plugin-simple-html';
 export default defineConfig({
   plugins: [
     simpleHtmlPlugin({
-      minify: true,
       inject: {
         data: {
           title: 'My App',
@@ -36,6 +35,7 @@ export default defineConfig({
           },
         ],
       },
+      minify: true,
     }),
   ],
 });
