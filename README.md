@@ -93,9 +93,9 @@ export default defineConfig({
 });
 ```
 
-### EJS syntax support
+### EJS variables support
 
-You can use EJS syntax in your HTML files.
+You can inject variables into your HTML files using EJS syntax.
 
 ```ts
 import { defineConfig } from 'vite';
