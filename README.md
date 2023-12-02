@@ -2,7 +2,7 @@
 
 # vite-plugin-simple-html
 
-Vite plugin for HTML processing and minification. "Lite" version of [vite-plugin-html](https://github.com/vbenjs/vite-plugin-html), supporting a subset of its features.
+Vite plugin for HTML processing and minification. "Lite" version of [vite-plugin-html](https://github.com/vbenjs/vite-plugin-html), supporting a [subset](#detailed-comparison-with-vite-plugin-html) of its features.
 
 ## tl;dr
 
@@ -178,6 +178,24 @@ export default defineConfig({
   ],
 });
 ```
+
+## Detailed comparison with [vite-plugin-html](https://github.com/vbenjs/vite-plugin-html)
+
+| Feature                  | vite-plugin-simple-html | vite-plugin-html |
+| ------------------------ | ----------------------- | ---------------- |
+| EJS variables support    | ✅                      | ✅               |
+| Full EJS support         | ❌                      | ✅               |
+| HTML tags injection      | ✅                      | ✅               |
+| HTML/CSS/JS minification | ✅                      | ✅               |
+| entry script injection   | ❌                      | ✅               |
+| template customization   | ❌                      | ✅               |
+| multi-page support       | ❌                      | ✅               |
+
+### Why bother?
+
+- `vite-plugin-simple-html` has fewer dependencies.
+- `vite-plugin-simple-html` does not suffer from [issue that breaks Vite proxy](https://github.com/vbenjs/vite-plugin-html/issues/38) (which was the reason I created this plugin in the first place).
+- `vite-plugin-simple-html` does not use options deprecated in Vite 5, and thus does not produce deprecation warnings.
 
 ## License
 
