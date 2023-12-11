@@ -153,32 +153,6 @@ export default defineConfig({
 });
 ```
 
-```ts
-import { defineConfig } from 'vite';
-import simpleHtmlPlugin from 'vite-plugin-simple-html';
-
-export default defineConfig({
-  plugins: [
-    simpleHtmlPlugin({
-      inject: {
-        data: {
-          title: 'My App',
-        },
-        tags: [
-          {
-            tag: 'meta',
-            attrs: {
-              name: 'description',
-              content: 'My awesome App',
-            },
-          },
-        ],
-      },
-    }),
-  ],
-});
-```
-
 ## Detailed comparison with [vite-plugin-html](https://github.com/vbenjs/vite-plugin-html)
 
 | Feature                  | vite-plugin-simple-html | vite-plugin-html |
