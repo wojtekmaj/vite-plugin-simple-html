@@ -77,7 +77,7 @@ export default function simpleHtmlPlugin({ inject, minify: minifyOptions = false
         if (minifyOptions) {
           result = await minify(
             result,
-            typeof minifyOptions === 'object' ? minifyOptions : defaultMinifyOptions,
+            minifyOptions === true ? defaultMinifyOptions : minifyOptions,
           );
         }
 
