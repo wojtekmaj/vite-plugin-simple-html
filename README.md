@@ -23,14 +23,15 @@ export default defineConfig({
     simpleHtmlPlugin({
       inject: {
         data: {
-          title: 'My App',
+          title: 'My app',
+          script: '<script src="index.js"></script>',
         },
         tags: [
           {
             tag: 'meta',
             attrs: {
               name: 'description',
-              content: 'My awesome App',
+              content: 'My awesome app',
             },
           },
         ],
@@ -106,7 +107,7 @@ export default defineConfig({
     simpleHtmlPlugin({
       inject: {
         data: {
-          title: 'My App',
+          title: 'My app',
         },
       },
     }),
@@ -143,7 +144,7 @@ export default defineConfig({
             tag: 'meta',
             attrs: {
               name: 'description',
-              content: 'My awesome App',
+              content: 'My awesome app',
             },
           },
         ],
@@ -153,12 +154,18 @@ export default defineConfig({
 });
 ```
 
+By default, they are injected at the end of the `<head>` section of your HTML file. You can change that behavior by setting `injectTo`:
+
+- `head`: Injects tags at the end of the `<head>` section of your HTML file (default).
+- `head-prepend`: Injects tags at the beginning of the `<head>` section of your HTML file.
+- `body`: Injects tags at the end of the `<body>` section of your HTML file.
+- `body-prepend`: Injects tags at the beginning of the `<body>` section of your HTML file.
+
 ## Detailed comparison with [vite-plugin-html](https://github.com/vbenjs/vite-plugin-html)
 
 | Feature                  | vite-plugin-simple-html | vite-plugin-html |
 | ------------------------ | ----------------------- | ---------------- |
-| EJS variables support    | ✅                      | ✅               |
-| Full EJS support         | ❌                      | ✅               |
+| EJS support              | ⚠️ Variables only       | ✅               |
 | HTML tags injection      | ✅                      | ✅               |
 | HTML/CSS/JS minification | ✅                      | ✅               |
 | entry script injection   | ❌                      | ✅               |
@@ -169,7 +176,13 @@ export default defineConfig({
 
 - `vite-plugin-simple-html` has fewer dependencies.
 - `vite-plugin-simple-html` does not suffer from [issue that breaks Vite proxy](https://github.com/vbenjs/vite-plugin-html/issues/38) (which was the reason I created this plugin in the first place).
-- `vite-plugin-simple-html` does not use options deprecated in Vite 5, and thus does not produce deprecation warnings.
+- `vite-plugin-simple-html` does not use options deprecated in Vite 5, and thus does not produce deprecation warnings:
+
+  ```
+   WARN  plugin 'vite:html' uses deprecated 'enforce' option. Use 'order' option instead.
+
+   WARN  plugin 'vite:html' uses deprecated 'transform' option. Use 'handler' option instead.
+  ```
 
 ## License
 
@@ -187,3 +200,4 @@ The MIT License.
     </td>
   </tr>
 </table>
+```
