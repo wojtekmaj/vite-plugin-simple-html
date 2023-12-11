@@ -34,14 +34,14 @@ export default function simpleHtmlPlugin({ inject, minify: minifyOptions = false
 
         // Replace ejs variables
         if (data) {
-          Object.entries(data).forEach(([key, value]) => {
+          for (const [key, value] of Object.entries(data)) {
             result = result.replaceAll(new RegExp(`<%= ${key} %>`, 'g'), value);
-          });
+          }
         }
 
         // Inject meta tags
         if (tags) {
-          tags.forEach((tag) => {
+          for (const tag of tags) {
             const { tag: tagName, attrs, injectTo = 'head' } = tag;
 
             let tagString = `<${tagName}${
@@ -71,7 +71,7 @@ export default function simpleHtmlPlugin({ inject, minify: minifyOptions = false
               default:
                 throw new Error(`Unknown injectTo value: ${injectTo satisfies never}`);
             }
-          });
+          }
         }
 
         if (minifyOptions) {
