@@ -69,7 +69,7 @@ export default function simpleHtmlPlugin({ inject, minify: minifyOptions = false
                 result = result.replace(/<body>/, `<body>${tagString}`);
                 break;
               default:
-                throw new Error(`Unknown injectTo value: ${injectTo}`);
+                throw new Error(`Unknown injectTo value: ${injectTo satisfies never}`);
             }
           });
         }
