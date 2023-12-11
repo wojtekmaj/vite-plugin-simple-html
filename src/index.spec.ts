@@ -14,6 +14,18 @@ describe('simpleHtmlPlugin()', () => {
 
       expect(result).toBe('<html><title>Hello world!</title></html>');
     });
+
+    it('should replace EJS variables properly with HTML content', async () => {
+      const html =
+        '<html><head><title>Hello world!</title></head><body><%= footer %></body></html>';
+      const data = { footer: '<footer>Footer</footer>' };
+
+      const result = await simpleHtmlPlugin({ inject: { data } }).transformIndexHtml.handler(html);
+
+      expect(result).toBe(
+        '<html><head><title>Hello world!</title></head><body><footer>Footer</footer></body></html>',
+      );
+    });
   });
 
   describe('tag injection', () => {
