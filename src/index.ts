@@ -1,4 +1,5 @@
-import { minify } from 'html-minifier-terser';
+import htmlPlugin from './htmlPlugin.js';
+import minifyPlugin from './minifyPlugin.js';
 
 import type { HtmlTagDescriptor, PluginOption } from 'vite';
 import type { Options as HtmlMinifierTerserOptions } from 'html-minifier-terser';
@@ -11,78 +12,6 @@ type Options = {
   minify?: boolean | HtmlMinifierTerserOptions;
 };
 
-const defaultMinifyOptions: HtmlMinifierTerserOptions = {
-  collapseWhitespace: true,
-  keepClosingSlash: true,
-  removeComments: true,
-  removeRedundantAttributes: true,
-  removeScriptTypeAttributes: true,
-  removeStyleLinkTypeAttributes: true,
-  useShortDoctype: true,
-  minifyCSS: true,
-};
-
-export default function simpleHtmlPlugin({ inject, minify: minifyOptions = false }: Options = {}) {
-  return {
-    name: 'vite:simple-html',
-    transformIndexHtml: {
-      order: 'pre',
-      handler: async (html: string) => {
-        const { data, tags } = inject || {};
-
-        let result = html;
-
-        // Replace ejs variables
-        if (data) {
-          for (const [key, value] of Object.entries(data)) {
-            result = result.replaceAll(new RegExp(`<%= ${key} %>`, 'g'), value);
-          }
-        }
-
-        // Inject meta tags
-        if (tags) {
-          for (const tag of tags) {
-            const { tag: tagName, attrs, injectTo = 'head' } = tag;
-
-            let tagString = `<${tagName}${
-              attrs
-                ? ` ${Object.entries(attrs || {})
-                    .map(([key, value]) => `${key}="${value}"`)
-                    .join(' ')}`
-                : ''
-            }>`;
-            if (tagName !== 'link' && tagName !== 'meta') {
-              tagString += `</${tagName}>`;
-            }
-
-            switch (injectTo) {
-              case 'head':
-                result = result.replace(/<\/head>/, `${tagString}</head>`);
-                break;
-              case 'head-prepend':
-                result = result.replace(/<head>/, `<head>${tagString}`);
-                break;
-              case 'body':
-                result = result.replace(/<\/body>/, `${tagString}</body>`);
-                break;
-              case 'body-prepend':
-                result = result.replace(/<body>/, `<body>${tagString}`);
-                break;
-              default:
-                throw new Error(`Unknown injectTo value: ${injectTo satisfies never}`);
-            }
-          }
-        }
-
-        if (minifyOptions) {
-          result = await minify(
-            result,
-            minifyOptions === true ? defaultMinifyOptions : minifyOptions,
-          );
-        }
-
-        return result;
-      },
-    },
-  } satisfies PluginOption;
+export default function simpleHtmlPlugin(options?: Options) {
+  return [htmlPlugin(options), minifyPlugin(options)] satisfies PluginOption;
 }

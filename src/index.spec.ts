@@ -1,8 +1,26 @@
 import { describe, expect, it } from 'vitest';
+import { asyncReduce } from '@wojtekmaj/async-array-utils';
 
 import simpleHtmlPlugin from './index.js';
 
 import type { HtmlTagDescriptor } from 'vite';
+
+function runPlugin(
+  html: string,
+  options?: Parameters<typeof simpleHtmlPlugin>[0],
+): Promise<string> {
+  const pluginOrArrayOfPlugins = simpleHtmlPlugin(options);
+
+  const arrayOfPlugins = Array.isArray(pluginOrArrayOfPlugins)
+    ? pluginOrArrayOfPlugins
+    : [pluginOrArrayOfPlugins];
+
+  return asyncReduce(
+    arrayOfPlugins,
+    (result, plugin) => plugin.transformIndexHtml.handler(result),
+    html,
+  );
+}
 
 describe('simpleHtmlPlugin()', () => {
   describe('EJS variables', () => {
@@ -10,7 +28,7 @@ describe('simpleHtmlPlugin()', () => {
       const html = '<html><title><%= title %></title></html>';
       const data = { title: 'Hello world!' };
 
-      const result = await simpleHtmlPlugin({ inject: { data } }).transformIndexHtml.handler(html);
+      const result = await runPlugin(html, { inject: { data } });
 
       expect(result).toBe('<html><title>Hello world!</title></html>');
     });
@@ -20,7 +38,7 @@ describe('simpleHtmlPlugin()', () => {
         '<html><head><title>Hello world!</title></head><body><%= footer %></body></html>';
       const data = { footer: '<footer>Footer</footer>' };
 
-      const result = await simpleHtmlPlugin({ inject: { data } }).transformIndexHtml.handler(html);
+      const result = await runPlugin(html, { inject: { data } });
 
       expect(result).toBe(
         '<html><head><title>Hello world!</title></head><body><footer>Footer</footer></body></html>',
@@ -41,7 +59,7 @@ describe('simpleHtmlPlugin()', () => {
         },
       ];
 
-      const result = await simpleHtmlPlugin({ inject: { tags } }).transformIndexHtml.handler(html);
+      const result = await runPlugin(html, { inject: { tags } });
 
       expect(result).toBe(
         '<html><head><title>Hello world!</title><meta name="description" content="Hello world!"></head><body></body></html>',
@@ -61,7 +79,7 @@ describe('simpleHtmlPlugin()', () => {
         },
       ];
 
-      const result = await simpleHtmlPlugin({ inject: { tags } }).transformIndexHtml.handler(html);
+      const result = await runPlugin(html, { inject: { tags } });
 
       expect(result).toBe(
         '<html><head><title>Hello world!</title><meta name="description" content="Hello world!"></head><body></body></html>',
@@ -81,7 +99,7 @@ describe('simpleHtmlPlugin()', () => {
         },
       ];
 
-      const result = await simpleHtmlPlugin({ inject: { tags } }).transformIndexHtml.handler(html);
+      const result = await runPlugin(html, { inject: { tags } });
 
       expect(result).toBe(
         '<html><head><meta name="description" content="Hello world!"><title>Hello world!</title></head><body></body></html>',
@@ -100,7 +118,7 @@ describe('simpleHtmlPlugin()', () => {
         },
       ];
 
-      const result = await simpleHtmlPlugin({ inject: { tags } }).transformIndexHtml.handler(html);
+      const result = await runPlugin(html, { inject: { tags } });
 
       expect(result).toBe(
         '<html><head><title>Hello world!</title></head><body><script src="main.js"></script></body></html>',
@@ -119,7 +137,7 @@ describe('simpleHtmlPlugin()', () => {
         },
       ];
 
-      const result = await simpleHtmlPlugin({ inject: { tags } }).transformIndexHtml.handler(html);
+      const result = await runPlugin(html, { inject: { tags } });
 
       expect(result).toBe(
         '<html><head><title>Hello world!</title></head><body><script src="main.js"></script></body></html>',
@@ -137,7 +155,7 @@ describe('simpleHtmlPlugin()', () => {
   </body>
 </html>`;
 
-      const result = await simpleHtmlPlugin().transformIndexHtml.handler(html);
+      const result = await runPlugin(html);
 
       expect(result).toBe(html);
     });
@@ -151,7 +169,7 @@ describe('simpleHtmlPlugin()', () => {
   </body>
 </html>`;
 
-      const result = await simpleHtmlPlugin({ minify: true }).transformIndexHtml.handler(html);
+      const result = await runPlugin(html, { minify: true });
 
       expect(result).toBe('<html><head><title>Hello world!</title></head><body></body></html>');
     });
@@ -166,7 +184,7 @@ describe('simpleHtmlPlugin()', () => {
   </body>
 </html>`;
 
-      const result = await simpleHtmlPlugin({ minify: true }).transformIndexHtml.handler(html);
+      const result = await runPlugin(html, { minify: true });
 
       expect(result).toBe('<html><head><title>Hello world!</title></head><body></body></html>');
     });
@@ -184,7 +202,7 @@ describe('simpleHtmlPlugin()', () => {
   </body>
 </html>`;
 
-      const result = await simpleHtmlPlugin({ minify: true }).transformIndexHtml.handler(html);
+      const result = await runPlugin(html, { minify: true });
 
       expect(result).toBe(
         '<html><head><style>body{background-color:red}</style></head><body></body></html>',
@@ -204,7 +222,7 @@ describe('simpleHtmlPlugin()', () => {
   </body>
 </html>`;
 
-      const result = await simpleHtmlPlugin({ minify: true }).transformIndexHtml.handler(html);
+      const result = await runPlugin(html, { minify: true });
 
       expect(result).toBe(
         `<html><head><script>if (true) {
@@ -226,12 +244,12 @@ describe('simpleHtmlPlugin()', () => {
   </body>
 </html>`;
 
-      const result = await simpleHtmlPlugin({
+      const result = await runPlugin(html, {
         minify: {
           collapseWhitespace: true,
           minifyJS: true,
         },
-      }).transformIndexHtml.handler(html);
+      });
 
       expect(result).toBe(
         '<html><head><script>console.log("Hello world!")</script></head><body></body></html>',
