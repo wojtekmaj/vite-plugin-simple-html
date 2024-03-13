@@ -73,5 +73,5 @@
     "url": "git+https://github.com/wojtekmaj/vite-plugin-simple-html.git"
   },
   "funding": "https://github.com/wojtekmaj/vite-plugin-simple-html?sponsor=1",
-  "packageManager": "yarn@4.1.0"
+  "packageManager": "yarn@4.1.1"
 }
