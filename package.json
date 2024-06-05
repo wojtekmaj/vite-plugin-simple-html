@@ -13,8 +13,8 @@
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
     "clean": "rimraf dist",
-    "format": "prettier --check . --cache",
-    "lint": "eslint .",
+    "format": "biome format",
+    "lint": "biome lint",
     "postinstall": "husky",
     "prepack": "yarn clean && yarn build",
     "test": "yarn lint && yarn tsc && yarn format && yarn unit",
@@ -36,13 +36,10 @@
     "html-minifier-terser": "^7.0.0"
   },
   "devDependencies": {
+    "@biomejs/biome": "^1.8.0",
     "@types/html-minifier-terser": "^7.0.0",
     "@wojtekmaj/async-array-utils": "^1.8.1",
-    "eslint": "^8.56.0",
-    "eslint-config-wojtekmaj": "^1.0.0",
     "husky": "^9.0.0",
-    "lint-staged": "^15.0.0",
-    "prettier": "^3.2.0",
     "rimraf": "^3.0.0",
     "typescript": "^5.4.2",
     "vite": "^5.0.0",
@@ -56,9 +53,6 @@
     "@types/html-minifier-terser": {
       "optional": true
     }
-  },
-  "resolutions": {
-    "eslint-plugin-import": "npm:eslint-plugin-i@^2.28.0"
   },
   "publishConfig": {
     "access": "public",
