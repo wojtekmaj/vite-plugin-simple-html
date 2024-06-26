@@ -7,7 +7,13 @@ type Options = {
   };
 };
 
-export default function htmlPlugin({ inject }: Options = {}) {
+export default function htmlPlugin({ inject }: Options = {}): {
+  name: string;
+  transformIndexHtml: {
+    order: 'pre';
+    handler: (html: string) => Promise<string>;
+  };
+} {
   return {
     name: 'vite:simple-html:ejs',
     transformIndexHtml: {

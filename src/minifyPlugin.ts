@@ -22,7 +22,13 @@ const defaultMinifyOptions: HtmlMinifierTerserOptions = {
   minifyCSS: true,
 };
 
-export default function simpleHtmlPlugin({ minify: minifyOptions = false }: Options = {}) {
+export default function simpleHtmlPlugin({ minify: minifyOptions = false }: Options = {}): {
+  name: string;
+  transformIndexHtml: {
+    order: string;
+    handler: (html: string) => Promise<string>;
+  };
+} {
   return {
     name: 'vite:simple-html:minify',
     transformIndexHtml: {

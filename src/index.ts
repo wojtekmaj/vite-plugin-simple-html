@@ -12,6 +12,12 @@ type Options = {
   minify?: boolean | HtmlMinifierTerserOptions;
 };
 
-export default function simpleHtmlPlugin(options?: Options) {
-  return [htmlPlugin(options), minifyPlugin(options)] satisfies PluginOption;
+export default function simpleHtmlPlugin(options?: Options): {
+  name: string;
+  transformIndexHtml: {
+    order: string;
+    handler: (html: string) => Promise<string>;
+  };
+}[] {
+  return [htmlPlugin(options), minifyPlugin(options)];
 }
