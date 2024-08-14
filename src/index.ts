@@ -1,7 +1,7 @@
 import htmlPlugin from './htmlPlugin.js';
 import minifyPlugin from './minifyPlugin.js';
 
-import type { HtmlTagDescriptor, PluginOption } from 'vite';
+import type { HtmlTagDescriptor } from 'vite';
 import type { Options as HtmlMinifierTerserOptions } from 'html-minifier-terser';
 
 type Options = {
