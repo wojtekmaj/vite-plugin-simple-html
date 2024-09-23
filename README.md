@@ -200,4 +200,3 @@ The MIT License.
     </td>
   </tr>
 </table>
-```
