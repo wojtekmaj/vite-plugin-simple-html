@@ -46,7 +46,7 @@
     "rimraf": "^6.0.0",
     "typescript": "^5.5.2",
     "vite": "^5.0.0",
-    "vitest": "^2.0.5"
+    "vitest": "^2.1.1"
   },
   "peerDependencies": {
     "@types/html-minifier-terser": "^7.0.0",
