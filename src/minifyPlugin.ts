@@ -25,7 +25,7 @@ const defaultMinifyOptions: HtmlMinifierTerserOptions = {
 export default function simpleHtmlPlugin({ minify: minifyOptions = false }: Options = {}): {
   name: string;
   transformIndexHtml: {
-    order: string;
+    order: 'post';
     handler: (html: string) => Promise<string>;
   };
 } {

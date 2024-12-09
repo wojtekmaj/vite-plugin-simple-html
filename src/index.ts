@@ -15,7 +15,7 @@ type Options = {
 export default function simpleHtmlPlugin(options?: Options): {
   name: string;
   transformIndexHtml: {
-    order: string;
+    order: 'pre' | 'post';
     handler: (html: string) => Promise<string>;
   };
 }[] {
