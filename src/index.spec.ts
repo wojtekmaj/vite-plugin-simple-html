@@ -243,7 +243,7 @@ describe('simpleHtmlPlugin()', () => {
       );
     });
 
-    it('should not minify JS properly by default given minify = true', async () => {
+    it('should not minify JS by default given minify = true', async () => {
       const html = `<html>
   <head>
     <script>
