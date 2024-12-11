@@ -1,25 +1,26 @@
-import { minify } from 'html-minifier-terser';
+import { minify } from '@swc/html';
 
 import type { HtmlTagDescriptor, PluginOption } from 'vite';
-import type { Options as HtmlMinifierTerserOptions } from 'html-minifier-terser';
+import type { Options as SwcHtmlOptions } from '@swc/html';
 
 type Options = {
   inject?: {
     data?: Record<string, string>;
     tags?: HtmlTagDescriptor[];
   };
-  minify?: boolean | HtmlMinifierTerserOptions;
+  minify?: boolean | SwcHtmlOptions;
 };
 
-export const defaultMinifyOptions: HtmlMinifierTerserOptions = {
-  collapseWhitespace: true,
-  keepClosingSlash: true,
+export const defaultMinifyOptions: SwcHtmlOptions = {
+  collapseWhitespaces: 'all',
+  minifyCss: true,
+  minifyJs: false,
+  minifyJson: true,
+  quotes: true,
   removeComments: true,
-  removeRedundantAttributes: true,
-  removeScriptTypeAttributes: true,
-  removeStyleLinkTypeAttributes: true,
-  useShortDoctype: true,
-  minifyCSS: true,
+  removeEmptyAttributes: true,
+  removeRedundantAttributes: 'all',
+  tagOmission: false,
 };
 
 export default function simpleHtmlPlugin({ minify: minifyOptions = false }: Options = {}): {
@@ -37,10 +38,10 @@ export default function simpleHtmlPlugin({ minify: minifyOptions = false }: Opti
         let result = html;
 
         if (minifyOptions) {
-          result = await minify(
+          ({ code: result } = await minify(
             result,
             minifyOptions === true ? defaultMinifyOptions : minifyOptions,
-          );
+          ));
         }
 
         return result;

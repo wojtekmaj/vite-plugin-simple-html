@@ -46,7 +46,7 @@ export default defineConfig({
 
 ### Minification
 
-HTML minification is done using [html-minifier-terser](https://github.com/terser/html-minifier-terser).
+HTML minification is done using [@swc/html](https://www.npmjs.com/package/@swc/html).
 
 To minify your HTML files, set `minify` to `true`:
 
@@ -67,14 +67,15 @@ The default configuration in this case is:
 
 ```js
 {
-  collapseWhitespace: true,
-  keepClosingSlash: true,
+  collapseWhitespaces: 'all',
+  minifyCss: true,
+  minifyJs: false,
+  minifyJson: true,
+  quotes: true,
   removeComments: true,
-  removeRedundantAttributes: true,
-  removeScriptTypeAttributes: true,
-  removeStyleLinkTypeAttributes: true,
-  useShortDoctype: true,
-  minifyCSS: true,
+  removeEmptyAttributes: true,
+  removeRedundantAttributes: 'all',
+  tagOmission: false,
 }
 ```
 
@@ -93,7 +94,7 @@ export default defineConfig({
   plugins: [
     simpleHtmlPlugin({
       minify: {
-        minifyJS: true,
+        minifyJs: true,
       },
     }),
   ],
