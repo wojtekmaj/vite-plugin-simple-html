@@ -189,6 +189,40 @@ describe('simpleHtmlPlugin()', () => {
       expect(result).toBe('<html><head><title>Hello world!</title></head><body></body></html>');
     });
 
+    it('should remove script type attributes properly by default given minify = true', async () => {
+      const html = `<html>
+  <head>
+    <script type="text/javascript">
+      console.log('Hello world!');
+    </script>
+  </head>
+  <body>
+  </body>
+</html>`;
+
+      const result = await runPlugin(html, { minify: true });
+
+      expect(result).toBe(
+        `<html><head><script>console.log('Hello world!');</script></head><body></body></html>`,
+      );
+    });
+
+    it('should remove style link type attributes properly by default given minify = true', async () => {
+      const html = `<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="main.css">
+  </head>
+  <body>
+  </body>
+</html>`;
+
+      const result = await runPlugin(html, { minify: true });
+
+      expect(result).toBe(
+        '<html><head><link rel="stylesheet" href="main.css"></head><body></body></html>',
+      );
+    });
+
     it('should minify CSS properly by default given minify = true', async () => {
       const html = `<html>
   <head>
@@ -253,6 +287,23 @@ describe('simpleHtmlPlugin()', () => {
 
       expect(result).toBe(
         '<html><head><script>console.log("Hello world!")</script></head><body></body></html>',
+      );
+    });
+
+    it('should preserve doctype properly given minify = true', async () => {
+      const html = `<!doctype html>
+<html>
+  <head>
+    <title>Hello world!</title>
+  </head>
+  <body>
+  </body>
+</html>`;
+
+      const result = await runPlugin(html, { minify: true });
+
+      expect(result).toBe(
+        '<!doctype html><html><head><title>Hello world!</title></head><body></body></html>',
       );
     });
   });
