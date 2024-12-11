@@ -11,7 +11,7 @@ type Options = {
   minify?: boolean | HtmlMinifierTerserOptions;
 };
 
-const defaultMinifyOptions: HtmlMinifierTerserOptions = {
+export const defaultMinifyOptions: HtmlMinifierTerserOptions = {
   collapseWhitespace: true,
   keepClosingSlash: true,
   removeComments: true,

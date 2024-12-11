@@ -1,5 +1,5 @@
 import htmlPlugin from './htmlPlugin.js';
-import minifyPlugin from './minifyPlugin.js';
+import minifyPlugin, { defaultMinifyOptions } from './minifyPlugin.js';
 
 import type { HtmlTagDescriptor } from 'vite';
 import type { Options as HtmlMinifierTerserOptions } from 'html-minifier-terser';
@@ -21,3 +21,5 @@ export default function simpleHtmlPlugin(options?: Options): {
 }[] {
   return [htmlPlugin(options), minifyPlugin(options)];
 }
+
+export { defaultMinifyOptions };

@@ -78,6 +78,12 @@ The default configuration in this case is:
 }
 ```
 
+You can access that configuration by importing `defaultMinifyOptions` from the plugin:
+
+```ts
+import { defaultMinifyOptions } from 'vite-plugin-simple-html';
+```
+
 If you want to customize the minification process, for example to minify JS, you can pass your own configuration object:
 
 ```ts
