@@ -2,14 +2,14 @@ import htmlPlugin from './htmlPlugin.js';
 import minifyPlugin, { defaultMinifyOptions } from './minifyPlugin.js';
 
 import type { HtmlTagDescriptor } from 'vite';
-import type { Options as HtmlMinifierTerserOptions } from 'html-minifier-terser';
+import type { Options as SwcHtmlOptions } from '@swc/html';
 
 type Options = {
   inject?: {
     data?: Record<string, string>;
     tags?: HtmlTagDescriptor[];
   };
-  minify?: boolean | HtmlMinifierTerserOptions;
+  minify?: boolean | SwcHtmlOptions;
 };
 
 export default function simpleHtmlPlugin(options?: Options): {

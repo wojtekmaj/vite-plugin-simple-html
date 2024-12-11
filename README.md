@@ -46,7 +46,7 @@ export default defineConfig({
 
 ### Minification
 
-HTML minification is done using [html-minifier-terser](https://github.com/terser/html-minifier-terser).
+Minification is handled by [@swc/html](https://www.npmjs.com/package/@swc/html).
 
 To minify your HTML files, set `minify` to `true`:
 
@@ -67,14 +67,15 @@ The default configuration in this case is:
 
 ```js
 {
-  collapseWhitespace: true,
-  keepClosingSlash: true,
+  collapseWhitespaces: 'all',
+  minifyCss: true,
+  minifyJs: false,
+  minifyJson: true,
+  quotes: true,
   removeComments: true,
-  removeRedundantAttributes: true,
-  removeScriptTypeAttributes: true,
-  removeStyleLinkTypeAttributes: true,
-  useShortDoctype: true,
-  minifyCSS: true,
+  removeEmptyAttributes: true,
+  removeRedundantAttributes: 'all',
+  tagOmission: false,
 }
 ```
 
@@ -83,6 +84,9 @@ You can access that configuration by importing `defaultMinifyOptions` from the p
 ```ts
 import { defaultMinifyOptions } from 'vite-plugin-simple-html';
 ```
+
+> [!NOTE]
+> The default configuration is designed for compatibility with vite-plugin-html. For more aggressive minification, consider adjusting the settings to better suit your needs.
 
 If you want to customize the minification process, for example to minify JS, you can pass your own configuration object:
 
@@ -93,12 +97,14 @@ export default defineConfig({
   plugins: [
     simpleHtmlPlugin({
       minify: {
-        minifyJS: true,
+        minifyJs: true,
       },
     }),
   ],
 });
 ```
+
+For a full list of available options, refer to [@swc/html documentation](https://swc.rs/docs/usage/html).
 
 ### EJS variables support
 
@@ -174,13 +180,16 @@ By default, they are injected at the end of the `<head>` section of your HTML fi
 | EJS support              | ⚠️ Variables only       | ✅               |
 | HTML tags injection      | ✅                      | ✅               |
 | HTML/CSS/JS minification | ✅                      | ✅               |
+| JSON minification        | ✅                      | ❌               |
 | entry script injection   | ❌                      | ✅               |
 | template customization   | ❌                      | ✅               |
 | multi-page support       | ❌                      | ✅               |
 
 ### Why bother?
 
-- `vite-plugin-simple-html` has fewer dependencies.
+- `vite-plugin-simple-html` has considerably fewer dependencies. Compare:
+  - [`vite-plugin-html` dependency graph](https://npmgraph.js.org/?q=vite-plugin-html)
+  - [`vite-plugin-simple-html` dependency graph](https://npmgraph.js.org/?q=vite-plugin-simple-html)
 - `vite-plugin-simple-html` does not suffer from [issue that breaks Vite proxy](https://github.com/vbenjs/vite-plugin-html/issues/38) (which was the reason I created this plugin in the first place).
 - `vite-plugin-simple-html` does not use options deprecated in Vite 5, and thus does not produce deprecation warnings:
 

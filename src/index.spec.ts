@@ -243,6 +243,26 @@ describe('simpleHtmlPlugin()', () => {
       );
     });
 
+    it('should minify JSON properly by default given minify = true', async () => {
+      const html = `<html>
+  <head>
+    <script type="application/json">
+      {
+        "hello": "world"
+      }
+    </script>
+  </head>
+  <body>
+  </body>
+</html>`;
+
+      const result = await runPlugin(html, { minify: true });
+
+      expect(result).toBe(
+        '<html><head><script type="application/json">{"hello":"world"}</script></head><body></body></html>',
+      );
+    });
+
     it('should not minify JS by default given minify = true', async () => {
       const html = `<html>
   <head>
@@ -265,7 +285,7 @@ describe('simpleHtmlPlugin()', () => {
       );
     });
 
-    it('should minify JS properly given minifyJS = true', async () => {
+    it('should minify JS properly given minifyJs = true', async () => {
       const html = `<html>
   <head>
     <script>
@@ -280,8 +300,9 @@ describe('simpleHtmlPlugin()', () => {
 
       const result = await runPlugin(html, {
         minify: {
-          collapseWhitespace: true,
-          minifyJS: true,
+          collapseWhitespaces: 'all',
+          minifyJs: true,
+          tagOmission: false,
         },
       });
 
