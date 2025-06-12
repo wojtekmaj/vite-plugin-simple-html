@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-simple-html",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Vite plugin for HTML processing and minification",
   "type": "module",
   "sideEffects": false,
