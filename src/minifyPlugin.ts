@@ -1,7 +1,7 @@
 import { minify } from '@swc/html';
 
-import type { HtmlTagDescriptor, PluginOption } from 'vite';
 import type { Options as SwcHtmlOptions } from '@swc/html';
+import type { HtmlTagDescriptor, PluginOption } from 'vite';
 
 type Options = {
   inject?: {

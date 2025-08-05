@@ -1,8 +1,8 @@
 import htmlPlugin from './htmlPlugin.js';
 import minifyPlugin, { defaultMinifyOptions } from './minifyPlugin.js';
 
-import type { HtmlTagDescriptor } from 'vite';
 import type { Options as SwcHtmlOptions } from '@swc/html';
+import type { HtmlTagDescriptor } from 'vite';
 
 type Options = {
   inject?: {
