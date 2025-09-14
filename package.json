@@ -39,7 +39,7 @@
     "@swc/html": "^1.10.1"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.0.0",
+    "@biomejs/biome": "2.2.4",
     "@types/node": "*",
     "@wojtekmaj/async-array-utils": "^1.8.1",
     "husky": "^9.0.0",
