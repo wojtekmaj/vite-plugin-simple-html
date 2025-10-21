@@ -44,7 +44,7 @@
     "@wojtekmaj/async-array-utils": "^1.8.1",
     "husky": "^9.0.0",
     "typescript": "^5.9.2",
-    "vite": "^7.1.5",
+    "vite": "^7.1.11",
     "vitest": "^3.2.3"
   },
   "peerDependencies": {
