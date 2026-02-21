@@ -198,6 +198,7 @@ By default, they are injected at the end of the `<head>` section of your HTML fi
 
    WARN  plugin 'vite:html' uses deprecated 'transform' option. Use 'handler' option instead.
   ```
+- `vite-plugin-simple-html` is actively maintained.
 
 ## License
 
